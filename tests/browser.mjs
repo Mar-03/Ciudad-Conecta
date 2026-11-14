@@ -1,0 +1,74 @@
+import { chromium } from 'playwright';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import sharp from 'sharp';
+import { initializeApp, deleteApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+
+if (!process.env.FIRESTORE_EMULATOR_HOST || !process.env.FIREBASE_PROJECT_ID?.startsWith('demo-')) throw new Error('Esta prueba requiere el emulador local.');
+const executablePath = process.env.BROWSER_PATH || ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Google/Chrome/Application/chrome.exe'].find(existsSync);
+const browser = await chromium.launch({ ...(executablePath ? { executablePath } : {}), headless: true });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1100 } });
+const page = await context.newPage();
+const errors = []; page.on('pageerror', error => errors.push(error.message));
+const base = process.env.APP_ORIGIN || 'http://127.0.0.1:3000';
+const firebase = initializeApp({ projectId: process.env.FIREBASE_PROJECT_ID }, `browser-${randomUUID()}`), db = getFirestore(firebase);
+let code;
+mkdirSync('test-results', { recursive: true });
+try {
+  await page.goto(base); await page.getByRole('heading', { name: /Un mejor lugar/ }).waitFor();
+  await page.screenshot({ path: 'test-results/portal-desktop.png', fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Sin desplazamiento horizontal en móvil');
+  await page.screenshot({ path: 'test-results/portal-mobile.png', fullPage: true });
+  await page.locator('input[value="calles"]').check();
+  await page.locator('#location').fill('Parque central — prueba de navegador');
+  await page.locator('#description').fill('Bache de prueba frente al parque. <img src=x onerror=alert(1)>');
+  await page.locator('#name').fill('Prueba de interfaz');
+  await page.locator('#email').fill('ui@example.com');
+  const photo = await sharp({ create: { width: 600, height: 400, channels: 3, background: '#c29a78' } }).png().toBuffer();
+  await page.locator('#photo').setInputFiles({ name: 'evidencia-prueba.png', mimeType: 'image/png', buffer: photo });
+  await page.locator('#photo-preview').waitFor({ state: 'visible' });
+  await page.getByRole('button', { name: /Enviar reporte ciudadano/ }).click();
+  await page.locator('#success-dialog').waitFor({ state: 'visible', timeout: 30000 });
+  code = await page.locator('#ticket-code').textContent(); assert.match(code, /^CC-[A-F0-9]{24}$/);
+  await page.getByRole('button', { name: /Consultar mi reporte/ }).click();
+  await page.getByText('Pendiente', { exact: true }).waitFor();
+  await page.reload(); await page.locator('#tracking-code').fill(code); await page.locator('#tracking-form button').click();
+  await page.getByText('Pendiente', { exact: true }).waitFor();
+  await page.goto(`${base}/admin.html`);
+  const access = readFileSync('.runtime/acceso-local.txt', 'utf8');
+  const password = access.match(/Contraseña: (.+)/)[1].trim();
+  await page.locator('#username').fill(process.env.ADMIN_USER || 'municipal'); await page.locator('#password').fill(password);
+  await page.getByRole('button', { name: /Iniciar sesión/ }).click();
+  await page.locator('#dashboard').waitFor({ state: 'visible' });
+  await page.getByRole('button', { name: `Ver detalle de ${code}`, exact: true }).waitFor();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.screenshot({ path: 'test-results/panel-desktop.png', fullPage: true });
+  await page.locator('#search').fill(code); await page.getByRole('button', { name: `Ver detalle de ${code}`, exact: true }).click();
+  await page.locator('#detail-content img').waitFor();
+  await page.waitForFunction(() => document.querySelector('#detail-content img')?.naturalWidth > 0);
+  assert.equal(await page.locator('#detail-content img').count(), 1, 'Descripción insertada como texto, sin ejecutar HTML');
+  assert.ok((await page.locator('#detail-content').textContent()).includes('<img src=x onerror=alert(1)>'));
+  await page.locator('#new-status').selectOption('en_proceso'); await page.getByRole('button', { name: 'Guardar estado' }).click();
+  await page.getByText('Estado guardado correctamente.', { exact: true }).waitFor();
+  await page.screenshot({ path: 'test-results/detalle.png', fullPage: true });
+  await page.getByRole('button', { name: 'Cerrar detalle', exact: true }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Panel adaptable en móvil');
+  await page.screenshot({ path: 'test-results/panel-mobile.png', fullPage: true });
+  await page.getByRole('button', { name: 'Cerrar sesión', exact: true }).click();
+  await page.locator('#login-section').waitFor({ state: 'visible' });
+  const status = await (await fetch(`${base}/api/reports/${code}/status`)).json(); assert.equal(status.report.status, 'en_proceso');
+  // Un error de red conserva los datos y nunca muestra confirmación de guardado.
+  await page.goto(base); await page.route('**/api/reports', route => route.abort('failed'));
+  await page.locator('input[value="agua"]').check(); await page.locator('#location').fill('Ubicación de prueba'); await page.locator('#description').fill('Fuga de agua en la calle de prueba, revisar tubería.'); await page.locator('#photo').setInputFiles({ name: 'prueba.png', mimeType: 'image/png', buffer: photo });
+  await page.getByRole('button', { name: /Enviar reporte ciudadano/ }).click(); await page.locator('#form-error').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#success-dialog').isVisible(), false); assert.equal(await page.locator('#location').inputValue(), 'Ubicación de prueba');
+  assert.deepEqual(errors, []);
+  console.log('UI verificada: móvil/escritorio, registro real con foto, recarga, seguimiento, login, detalle, XSS, estado, logout y error de red.');
+} finally {
+  if (code) { await db.collection('reports').doc(code).delete(); await db.collection('reportPhotos').doc(code).delete(); }
+  await context.close(); await browser.close(); await deleteApp(firebase);
+}
