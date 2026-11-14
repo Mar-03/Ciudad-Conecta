@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ciudadconecta
+    runtime: node
+    plan: free
+    branch: develop
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: FIREBASE_PROJECT_ID
+        value: ciudadconecta-98c5b
+      - key: ADMIN_USER
+        value: municipal
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false

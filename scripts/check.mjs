@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { readdirSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 function check(dir) {
   for (const file of readdirSync(dir, { withFileTypes: true })) {
@@ -10,5 +10,5 @@ function check(dir) {
     }
   }
 }
-for (const dir of ['frontend', 'scripts']) check(dir);
+for (const dir of ['frontend', 'backend', 'scripts', 'tests']) if (existsSync(dir)) check(dir);
 console.log('Sintaxis JavaScript correcta.');
