@@ -39,7 +39,7 @@ Los registros del emulador no se copian automáticamente a la nube. Crea un repo
 | reportPhotos | Mismo folio | bytes JPEG normalizados, tipo y tamaño |
 | sessions | Hash del token | usuario y expiración de sesión |
 
-El backend convierte JPG/PNG/WebP a JPEG, elimina metadatos y reduce la imagen a un máximo de 1280 px y 400 KB. Se preserva la descripción original; la foto conserva el contenido visual con compresión. El campo binario está excluido de índices. Las dos escrituras ocurren en una transacción; si falla, no se muestra confirmación.
+Se aceptan fotografías de hasta 20 MB y 200 megapíxeles. El backend convierte JPG/PNG/WebP a JPEG, elimina metadatos y reduce la imagen a un máximo de 1280 px y 400 KB. Se preserva la descripción original; la foto conserva el contenido visual con compresión. El campo binario está excluido de índices. Las dos escrituras ocurren en una transacción; si falla, no se muestra confirmación.
 
 Se eligió Firestore para fotos pequeñas porque [Cloud Storage for Firebase requiere Blaze](https://firebase.google.com/docs/storage/faqs-storage-changes-announced-sept-2024). Firestore mantiene [cuotas gratuitas](https://firebase.google.com/docs/firestore/quotas): 1 GiB almacenado, 50 000 lecturas y 20 000 escrituras diarias para la base elegible. Cada registro consume dos escrituras y cada consulta/sesión consume operaciones. No es una arquitectura destinada a fotografías masivas o de resolución original.
 

@@ -13,9 +13,9 @@ function previewPhoto() {
   $('#photo-preview').hidden = true;
   const file = $('#photo').files[0];
   if (!file) return;
-  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024 || file.size === 0) {
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 20 * 1024 * 1024 || file.size === 0) {
     $('#photo').value = '';
-    message($('#photo-error'), 'Selecciona una imagen JPG, PNG o WebP válida de hasta 8 MB.');
+    message($('#photo-error'), 'Selecciona una imagen JPG, PNG o WebP válida de hasta 20 MB.');
     return;
   }
   photoUrl = URL.createObjectURL(file);

@@ -35,3 +35,20 @@ test('producción rechaza emulador y claves ausentes', () => {
   assert.throws(() => getConfig({}));
   assert.throws(() => getConfig({ FIREBASE_PROJECT_ID: 'demo-test', ADMIN_PASSWORD_HASH: 'x', SESSION_SECRET: 'a'.repeat(32), NODE_ENV: 'production', FIRESTORE_EMULATOR_HOST: 'localhost:8080' }));
 });
+test('acepta fotografías de 48 megapíxeles y conserva el límite de almacenamiento', async () => {
+  const input = await sharp({ create: { width: 8000, height: 6000, channels: 3, background: '#7a9164' } }).jpeg().toBuffer();
+  const photo = await processPhoto({ buffer: input, mimetype: 'image/jpeg' });
+  const metadata = await sharp(photo.bytes).metadata();
+  assert.equal(metadata.width, 1280);
+  assert.equal(metadata.height, 960);
+  assert.ok(photo.size <= 400 * 1024);
+});
+test('rechaza resoluciones superiores a 200 megapíxeles antes de decodificar', async () => {
+  const input = await sharp({ create: { width: 16, height: 16, channels: 3, background: '#ffffff' } }).jpeg().toBuffer();
+  // Ajustar solo la cabecera JPEG permite probar el límite sin reservar una imagen enorme.
+  const frame = input.indexOf(Buffer.from([0xff, 0xc0]));
+  assert.ok(frame >= 0);
+  input.writeUInt16BE(15000, frame + 5);
+  input.writeUInt16BE(15000, frame + 7);
+  await assert.rejects(() => processPhoto({ buffer: input, mimetype: 'image/jpeg' }), error => error.status === 400 && /200 megapíxeles/.test(error.message));
+});

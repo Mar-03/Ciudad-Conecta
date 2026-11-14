@@ -26,7 +26,7 @@ export function createApp(db, config) {
   app.post('/api/auth/login', rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, skipSuccessfulRequests: true, standardHeaders: 'draft-8', legacyHeaders: false, message: { error: 'Demasiados intentos de acceso. Intenta en 15 minutos.' } }), auth.login);
   app.post('/api/auth/logout', auth.logout);
   app.get('/api/auth/session', auth.require, (req, res) => res.json({ username: req.user }));
-  const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 8 * 1024 * 1024, files: 1, fields: 7, fieldSize: 10000, parts: 9 } });
+  const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024, files: 1, fields: 7, fieldSize: 10000, parts: 9 } });
   app.post('/api/reports', rateLimit({ windowMs: 60 * 60 * 1000, limit: 30, standardHeaders: 'draft-8', legacyHeaders: false, message: { error: 'Límite de reportes alcanzado. Intenta más tarde.' } }), upload.single('photo'), async (req, res) => {
     const data = validateReport(req.body || {});
     const photo = await processPhoto(req.file);
@@ -56,7 +56,7 @@ export function createApp(db, config) {
   app.use((_req, res) => res.status(404).type('text').send('Página no encontrada.'));
   app.use((error, _req, res, _next) => {
     if (error instanceof HttpError) return res.status(error.status).json({ error: error.message });
-    if (error instanceof multer.MulterError) return res.status(400).json({ error: error.code === 'LIMIT_FILE_SIZE' ? 'La fotografía supera el límite de 8 MB.' : 'Adjunta una sola fotografía y revisa los campos del formulario.' });
+    if (error instanceof multer.MulterError) return res.status(400).json({ error: error.code === 'LIMIT_FILE_SIZE' ? 'La fotografía supera el límite de 20 MB.' : 'Adjunta una sola fotografía y revisa los campos del formulario.' });
     if (error.type === 'entity.parse.failed') return res.status(400).json({ error: 'El cuerpo JSON no es válido.' });
     if (error.type === 'entity.too.large') return res.status(413).json({ error: 'La solicitud es demasiado grande.' });
     // Sin textos del usuario, contraseñas ni detalles del SDK en la respuesta pública.
