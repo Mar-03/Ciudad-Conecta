@@ -11,6 +11,9 @@ import { processPhoto } from './photos.js';
 export function createApp(db, config) {
   const app = express(), repository = createRepository(db, config.sessionSecret), auth = createAuth(db, config);
   app.disable('x-powered-by');
+  if (config.trustProxy) app.set('trust proxy', config.trustProxy);
+  // Render consulta esta ruta con frecuencia; no consume lecturas de Firestore.
+  app.get('/healthz', (_req, res) => res.json({ ok: true }));
   app.use(helmet({ contentSecurityPolicy: { directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'], fontSrc: ["'self'", 'https://fonts.gstatic.com'], imgSrc: ["'self'", 'blob:'], connectSrc: ["'self'"], formAction: ["'self'"], upgradeInsecureRequests: config.production ? [] : null } }, crossOriginEmbedderPolicy: false, strictTransportSecurity: config.production ? undefined : false }));
   app.use('/api', (_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
   app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, limit: 600, standardHeaders: 'draft-8', legacyHeaders: false, message: { error: 'Demasiadas solicitudes. Espera unos minutos.' } }));

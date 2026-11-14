@@ -14,6 +14,12 @@ Proyecto de Desarrollo y Diseño Web. Series I y II: portal ciudadano, API y pan
 
 ## Alcance
 
+## Publicar completamente en línea
+
+El proyecto incluye `render.yaml` para ejecutar **frontend y backend juntos en Render**, conectados a **Firebase Firestore en la nube**. La aplicación publicada no requiere que tu computadora esté encendida. Sigue [la guía de Render](docs/render.md); utiliza la rama `develop`.
+
+En Render, `npm start` usa las variables del servicio y detecta automáticamente la URL HTTPS y el puerto. Las credenciales Firebase se configuran como secreto `FIREBASE_SERVICE_ACCOUNT_JSON`. No se utiliza el emulador ni un archivo `.env` local en producción.
+
 ## Ejecutar en tu computadora
 
 Requisitos: Node.js 22 o 24 LTS, Java 21 o superior e internet para la primera instalación y descarga del emulador.

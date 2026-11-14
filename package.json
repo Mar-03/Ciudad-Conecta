@@ -12,8 +12,8 @@
     "check": "node scripts/check.mjs",
     "setup": "node scripts/setup.mjs",
     "dev": "node scripts/dev.mjs",
-    "start": "node --env-file=.env backend/server.js",
-    "test": "node --test tests/unit.test.js",
+    "start": "node scripts/start.mjs",
+    "test": "node --test tests/unit.test.js tests/render.test.js",
     "test:integration": "node --env-file=.env --test tests/integration.test.js",
     "test:ui": "node --env-file=.env tests/browser.mjs"
   },
