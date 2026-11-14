@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-container": "#634935", "surface-container-high": "#f5e6d4", "primary": "#4f3028", "on-primary-container": "#e5b6ab", "primary-fixed-dim": "#ecbcb1", "secondary-fixed": "#ffdbcf", "surface-container": "#fbecd9", "outline": "#837471", "on-background": "#221a10", "on-tertiary-fixed-variant": "#5b412e", "tertiary": "#4a3320", "on-tertiary-fixed": "#2a1707", "on-surface": "#221a10", "on-tertiary-container": "#ddb9a0", "on-surface-variant": "#504441", "on-secondary-fixed": "#360f02", "tertiary-fixed": "#ffdcc4", "surface": "#fff8f3", "on-secondary": "#ffffff", "inverse-surface": "#372f23", "tertiary-fixed-dim": "#e4bfa6", "surface-dim": "#e6d8c6", "secondary-container": "#ffb59a", "on-error-container": "#93000a", "primary-fixed": "#ffdad2", "on-secondary-container": "#7a442f", "secondary": "#89503a", "surface-variant": "#efe0ce", "on-tertiary": "#ffffff", "error": "#ba1a1a", "outline-variant": "d5c3bf", "inverse-on-surface": "#feeedc", "on-secondary-fixed-variant": "#6c3925", "on-primary": "#ffffff", "secondary-fixed-dim": "#ffb59a", "background": "#fff8f3", "inverse-primary": "#ecbcb1", "surface-container-low": "#fff2e2", "on-primary-fixed-variant": "#603e36", "on-primary-fixed": "#2e140e", "error-container": "#ffdad6", "primary-container": "#69463e", "surface-tint": "#7a554d", "surface-container-lowest": "#ffffff", "on-error": "#ffffff", "surface-container-highest": "#efe0ce", "surface-bright": "#fff8f3" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2.5rem", "space-md": "1rem", "space-lg": "1.5rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-xs": "0.25rem", "space-sm": "0.5rem" }, fontFamily: { "headline-lg": ["Inter"], "code-sm": ["JetBrains Mono"], "display-mobile": ["Inter"], "label-sm": ["Inter"], "headline-lg-mobile": ["Inter"], "body-sm": ["Inter"], "body-md": ["Inter"], "label-md": ["Inter"], "title-md": ["Inter"], "headline-sm": ["Inter"], "body-lg": ["Inter"], "display": ["Inter"], "title-lg": ["Inter"], "headline-md": ["Inter"] }, fontSize: { "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "display-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fff8f3;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(105,70,62,0.06)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Regresar" class="w-11 h-11 flex items-center justify-center rounded-full text-primary hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="CiudadConecta Logo" class="h-7 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrDRY8XmwO2ePeez6qNVMprr65fEyV7lqQ3ACSvbLUUpC2BRYlY_s-cFpw6A6-gjSLRifn_0kwaNn9d1X4YQVVlaRw2YznPbajDEwWiTXMF5sY6xbMl1QuSPZsZWJVT0vDYJvoxsAgMHbEcVbAZxf6ieQVNAeF8qethfTG6-4-WV9Uh4iOT-zdJSHi2p356BuUoLnGlC_86v7XjpBXNMyyAkD9hQAYl6hQt9DbhjxyHj"/><h1 class="font-title-md text-title-md text-on-surface tracking-tight truncate ml-1">Reportar Incidencia</h1></div><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD25jOqtOzDlfEELVFbgjgji9J7CocA9mharjrh9qdydgOFCXkMVks_mg3Fq_JinatyzIJkL05DdfhgB0B2QwfDvVP7LV3ScejNzCXjCOIE17Z0WB8SGfodvs_tnmVyJGLs37KbyqsnXmjtUNAb7bKR1Skcx4K4CQyhCgLIrsOLWQFux4uvQXylvi2FPd47cZ-MDSY9Ckt9YpIj_3UowLYIF_dY-tIr-NH2r_K6-p0"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-10">
+<!-- Stepper de Progreso -->
+<div class="px-gutter-mobile pt-3 pb-2">
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Reporte Comunitario</span>
+<span class="font-code-sm text-code-sm text-tertiary-container bg-surface-container px-2 py-0.5 rounded-full">Paso 2 de 3</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 rounded-full bg-primary-container"></div>
+<div class="flex-1 h-1.5 rounded-full bg-primary-container"></div>
+<div class="flex-1 h-1.5 rounded-full bg-surface-variant"></div>
+</div>
+<div class="flex justify-between items-center mt-2.5 text-on-surface-variant">
+<span class="font-label-sm text-label-sm font-semibold text-primary">1. Datos</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 2. Evidencia
+        </span>
+<span class="font-label-sm text-label-sm opacity-60">3. Ubicación</span>
+</div>
+</div>
+</div>
+<!-- Contenedor Principal Formulario -->
+<div class="px-gutter-mobile mt-2">
+<div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-[0_8px_30px_rgba(105,70,62,0.07)] flex flex-col gap-5">
+<!-- Título de Sección -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="p-1.5 rounded-xl bg-surface-container text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add_location_alt</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Nuevo Reporte Ciudadano</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Tu reporte ayuda a canalizar cuadrillas de respuesta rápida municipal.
+        </p>
+</div>
+<!-- Selector Táctil de Categoría -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center justify-between">
+<span>Categoría del problema</span>
+<span class="font-label-sm text-label-sm text-secondary font-normal">Requerido</span>
+</label>
+<div class="grid grid-cols-2 gap-2.5" id="categorySelector">
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-surface-container text-left transition-all active:scale-[0.98] text-on-surface hover:bg-surface-variant" type="button">
+<span class="text-lg">💡</span>
+<span class="font-label-md text-label-md">Alumbrado</span>
+</button>
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-primary-container text-white shadow-sm transition-all active:scale-[0.98]" type="button">
+<span class="text-lg">🛣️</span>
+<span class="font-label-md text-label-md font-semibold">Calles dañadas</span>
+<span class="material-symbols-outlined ml-auto text-[18px]">check_circle</span>
+</button>
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-surface-container text-left transition-all active:scale-[0.98] text-on-surface hover:bg-surface-variant" type="button">
+<span class="text-lg">🗑️</span>
+<span class="font-label-md text-label-md">Basura</span>
+</button>
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-surface-container text-left transition-all active:scale-[0.98] text-on-surface hover:bg-surface-variant" type="button">
+<span class="text-lg">💧</span>
+<span class="font-label-md text-label-md">Agua potable</span>
+</button>
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-surface-container text-left transition-all active:scale-[0.98] text-on-surface hover:bg-surface-variant" type="button">
+<span class="text-lg">🛡️</span>
+<span class="font-label-md text-label-md">Seguridad</span>
+</button>
+<button class="cat-chip flex items-center gap-2 p-2.5 rounded-xl bg-surface-container text-left transition-all active:scale-[0.98] text-on-surface hover:bg-surface-variant" type="button">
+<span class="text-lg">➕</span>
+<span class="font-label-md text-label-md">Otros servicios</span>
+</button>
+</div>
+</div>
+<!-- Ubicación del Incidente -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1.5" for="locationInput">
+<span class="material-symbols-outlined text-[18px] text-secondary">pin_drop</span>
+          Ubicación del incidente
+        </label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-xl p-3 pr-10 focus:outline-none focus:bg-surface-container transition-all" id="locationInput" placeholder="Dirección o punto de referencia" type="text" value="Av. Libertador con Calle 14, Sector Centro"/>
+<button class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+</div>
+<button class="self-start flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-secondary text-label-sm font-label-sm font-semibold hover:bg-secondary-fixed transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">my_location</span>
+          Detectar mi ubicación actual
+        </button>
+</div>
+<!-- Descripción Detallada (Obligatoria) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1" for="descInput">
+            Descripción detallada
+            <span class="text-secondary">*</span>
+</label>
+<div class="flex items-center gap-1 text-label-sm font-label-sm text-[#4A7C59]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Válido</span>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-xl p-3 focus:outline-none focus:bg-surface-container transition-all resize-none" id="descInput" placeholder="Describe qué sucede, tamaño aproximado y riesgos visibles..." rows="3">Bache profundo en el carril derecho frente a la panadería municipal. Dificulta el paso vehicular y genera riesgo en horas punta.</textarea>
+</div>
+<div class="flex justify-between items-center px-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sé lo más descriptivo posible</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">142/500</span>
+</div>
+</div>
+<!-- Evidencia Fotográfica / Drag & Drop -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center justify-between">
+<span>Evidencia fotográfica</span>
+<span class="font-label-sm text-label-sm text-[#4A6B82] bg-[#EEF4F8] px-2 py-0.5 rounded-full font-medium">Análisis visual IA</span>
+</label>
+<!-- Preview de Imagen Cargada -->
+<div class="relative rounded-2xl bg-surface-container-low p-2.5 overflow-hidden flex flex-col gap-2.5 shadow-sm">
+<div class="relative w-full h-36 rounded-xl overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="Close-up photograph of a medium-sized asphalt pothole on an urban road next to a sidewalk with warm morning sunlight, candid street view style with muted terracotta and earth tones matching municipal repair context" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAicK6dkqBW1iRpFUbPLX3p3k6rYqReHALdGyYM_p_Q5M8UkSUlJ1F1uGAP9i63RC7fbOmmJpKP2tkk7gR_csitDiCqVt9hVg5MLJ76glsYgHI7xSqcZGcC2Z0mZ2TjWRTxYoCxMaaR-vd-yvsxtxaicsIE_YRgGrBRjZVo9qD3zyi6fpcBY5DccpFJGY_0QBnIDZVyVqYM7fpCcbsNJSaMKzaL8t9vuQkRB571Vw4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-white">
+<span class="font-code-sm text-code-sm bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">image</span>
+                bache_calle14.jpg
+              </span>
+<span class="font-code-sm text-code-sm bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-md">
+                2.4 MB
+              </span>
+</div>
+</div>
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-[#4A7C59]">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface">Fotografía nítida y geo-referenciada</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" title="Cambiar foto" type="button">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center hover:opacity-80 transition-opacity" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Datos del Ciudadano (Opcionales con Nota de Privacidad) -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-semibold">Tus datos de contacto</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">Opcional</span>
+</div>
+<div class="flex flex-col gap-2.5">
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl p-2.5 focus:outline-none focus:bg-surface-container transition-all" placeholder="Nombre completo (ej. Carlos Méndez)" type="text" value="Carlos Méndez"/>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-xl p-2.5 focus:outline-none focus:bg-surface-container transition-all" placeholder="Correo electrónico para seguimiento" type="email" value="carlos@ejemplo.com"/>
+</div>
+<div class="flex items-start gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">lock</span>
+<p class="font-body-sm text-body-sm leading-tight text-on-surface-variant">
+            Tus datos permanecen confidenciales bajo la ordenanza de privacidad ciudadana. Solo recibirás avisos de resolución.
+          </p>
+</div>
+</div>
+<!-- Botón de Envío Principal -->
+<div class="flex flex-col gap-2 pt-1">
+<button class="w-full bg-primary-container text-white py-3.5 px-4 rounded-xl font-title-md text-title-md font-semibold flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(105,70,62,0.25)] hover:bg-primary transition-all active:scale-[0.99]" id="btnSubmitReport" type="button">
+<span>Enviar reporte ciudadano</span>
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+<div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-[#4A6B82]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm text-label-sm">Verificación y clasificación IA inmediata</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal / Overlay de Confirmación Exitosa (Interactivo) -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none" id="successModal">
+<div class="bg-surface-container-lowest w-full max-w-sm rounded-3xl p-6 shadow-2xl flex flex-col items-center text-center transform translate-y-8 transition-all duration-300 relative overflow-hidden" id="modalCard">
+<!-- Halo decorativo cálido -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-secondary-fixed/50 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-10 -left-10 w-28 h-28 bg-[#EEF4F8] rounded-full blur-xl pointer-events-none"></div>
+<!-- Icono de Éxito con Doble Anillo -->
+<div class="w-20 h-20 rounded-full bg-[#EAF3EC] flex items-center justify-center mb-4 relative shadow-inner">
+<div class="w-14 h-14 rounded-full bg-[#4A7C59] flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-[32px] font-bold">check</span>
+</div>
+</div>
+<!-- Textos de Confirmación -->
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">
+        ¡Reporte Registrado!
+      </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1.5 mb-4">
+        Tu solicitud ha ingresado a la central municipal con prioridad validada por el asistente cívico.
+      </p>
+<!-- Pill de Código Único con Botón de Copiar -->
+<div class="w-full bg-surface-container rounded-2xl p-3 flex items-center justify-between mb-4">
+<div class="flex flex-col text-left pl-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Folio de seguimiento</span>
+<span class="font-code-sm text-code-sm font-bold text-primary tracking-wide" id="ticketCode">#CC-2024-9841</span>
+</div>
+<button class="flex items-center gap-1 bg-surface-container-lowest text-primary px-3 py-1.5 rounded-xl font-label-md text-label-md font-semibold shadow-sm hover:bg-white active:scale-95 transition-all" id="btnCopyCode" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span id="copyText">Copiar</span>
+</button>
+</div>
+<!-- Ficha de Tiempos y Asignación -->
+<div class="w-full bg-[#EEF4F8] rounded-xl p-3 flex items-center gap-2.5 text-left mb-6">
+<span class="material-symbols-outlined text-[#4A6B82] text-[22px]">smart_toy</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-[#4A6B82]">Clasificación IA Inmediata</span>
+<span class="font-body-sm text-body-sm text-[#4A6B82]/90">Asignación a cuadrilla vial en &lt; 24h</span>
+</div>
+</div>
+<!-- Acciones del Modal -->
+<div class="w-full flex flex-col gap-2.5">
+<button class="w-full bg-primary-container text-white py-3 rounded-xl font-title-md text-title-md font-semibold hover:bg-primary transition-colors flex items-center justify-center gap-2 shadow-sm" id="btnTrackReport" type="button">
+<span>Rastrear este reporte</span>
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</button>
+<button class="w-full bg-surface-container text-primary py-2.5 rounded-xl font-label-md text-label-md font-semibold hover:bg-surface-variant transition-colors flex items-center justify-center gap-1.5" id="btnNewReport" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Registrar otro reporte</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initInteractiveFlow() {
+    const btnSubmit = document.getElementById('btnSubmitReport');
+    const modal = document.getElementById('successModal');
+    const modalCard = document.getElementById('modalCard');
+    const btnNew = document.getElementById('btnNewReport');
+    const btnTrack = document.getElementById('btnTrackReport');
+    const btnCopy = document.getElementById('btnCopyCode');
+    const copyText = document.getElementById('copyText');
+    const ticketCode = document.getElementById('ticketCode');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      modalCard.classList.remove('translate-y-8');
+      modalCard.classList.add('translate-y-0');
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modalCard.classList.add('translate-y-8');
+      modalCard.classList.remove('translate-y-0');
+    }
+
+    if (btnSubmit) {
+      btnSubmit.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+      });
+    }
+
+    if (btnNew) {
+      btnNew.addEventListener('click', function() {
+        closeModal();
+      });
+    }
+
+    if (btnTrack) {
+      btnTrack.addEventListener('click', function() {
+        closeModal();
+      });
+    }
+
+    if (btnCopy && ticketCode) {
+      btnCopy.addEventListener('click', function() {
+        const text = ticketCode.innerText;
+        navigator.clipboard?.writeText(text).catch(() => {});
+        copyText.innerText = '¡Copiado!';
+        setTimeout(() => {
+          copyText.innerText = 'Copiar';
+        }, 1800);
+      });
+    }
+  })();
+</script></main></body></html>

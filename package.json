@@ -1,0 +1,12 @@
+{
+  "name": "ciudad-conecta",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portal ciudadano y panel municipal — Series I y II",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "preview:frontend": "node scripts/preview.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}
