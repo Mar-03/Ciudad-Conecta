@@ -4,6 +4,7 @@ node_modules/
 !.env.example
 .firebase/
 .emulator-data/
+firebase-export-*/
 .runtime/
 *-debug.log*
 *.log
