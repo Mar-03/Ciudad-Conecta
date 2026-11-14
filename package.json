@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Portal ciudadano y panel municipal — Series I y II",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "preview:frontend": "node scripts/preview.mjs",
     "check": "node scripts/check.mjs",
@@ -18,10 +20,10 @@
   "dependencies": {
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.0",
-    "firebase-admin": "^13.6.0",
+    "firebase-admin": "^14.5.1",
     "helmet": "^8.1.0",
     "multer": "^2.0.2",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "firebase-tools": "^14.26.0",

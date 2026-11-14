@@ -68,7 +68,13 @@ try {
   assert.equal(await page.locator('#success-dialog').isVisible(), false); assert.equal(await page.locator('#location').inputValue(), 'Ubicación de prueba');
   assert.deepEqual(errors, []);
   console.log('UI verificada: móvil/escritorio, registro real con foto, recarga, seguimiento, login, detalle, XSS, estado, logout y error de red.');
+} catch (error) {
+  console.error('Fallo de interfaz:', error.message);
+  await page.screenshot({ path: 'test-results/error.png', fullPage: true }).catch(() => {});
+  throw error;
 } finally {
+  await context.close(); await browser.close();
   if (code) { await db.collection('reports').doc(code).delete(); await db.collection('reportPhotos').doc(code).delete(); }
-  await context.close(); await browser.close(); await deleteApp(firebase);
+  await db.terminate();
+  await deleteApp(firebase);
 }

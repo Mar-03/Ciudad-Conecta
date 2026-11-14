@@ -1,5 +1,6 @@
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
-import { resolve, delimiter } from 'node:path';
+import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
+import { resolve, delimiter, sep } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { createConnection } from 'node:net';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -26,15 +27,35 @@ for (const [port, host] of [[Number(emulatorPort), emulatorHost], [Number(proces
   if (await portOpen(port, host)) { console.error(`El puerto ${port} ya está ocupado. Detén la instancia anterior antes de iniciar otra.`); process.exit(1); }
 }
 // Exportación mediante la herramienta oficial. Conserva datos entre reinicios.
-let exporting = false;
+const backupRoot = resolve('.emulator-data');
+mkdirSync(backupRoot, { recursive: true });
+function backups() {
+  return readdirSync(backupRoot, { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && !entry.isSymbolicLink() && /^snapshot-\d+$/.test(entry.name))
+    .map(entry => resolve(backupRoot, entry.name))
+    .filter(path => existsSync(resolve(path, 'firebase-export-metadata.json'))).sort().reverse();
+}
+let exporting = null;
 function exportData() {
-  if (exporting || !emulator || emulator.exitCode !== null) return Promise.resolve();
-  exporting = true;
-  return new Promise(resolvePromise => {
-    const child = spawn(process.execPath, ['node_modules/firebase-tools/lib/bin/firebase.js', 'emulators:export', '.emulator-data', '--project', env.FIREBASE_PROJECT_ID, '--force'], { env, stdio: 'ignore', windowsHide: true });
-    child.on('exit', code => { exporting = false; if (code) console.error('No se pudo crear el respaldo del emulador.'); resolvePromise(); });
-    child.on('error', () => { exporting = false; resolvePromise(); });
+  if (exporting) return exporting;
+  if (!emulator || emulator.exitCode !== null) return Promise.resolve();
+  // Directorios nuevos evitan reemplazar una carpeta bloqueada por Windows.
+  const destination = resolve(backupRoot, `snapshot-${Date.now()}`);
+  exporting = new Promise(resolvePromise => {
+    const child = spawn(process.execPath, ['node_modules/firebase-tools/lib/bin/firebase.js', 'emulators:export', destination, '--project', env.FIREBASE_PROJECT_ID, '--force'], { env, stdio: 'ignore', windowsHide: true });
+    child.on('exit', async code => {
+      if (code) console.error('No se pudo crear el respaldo del emulador. Se conserva el anterior.');
+      else {
+        for (const old of backups().slice(2)) {
+          // Borrar únicamente snapshots propios, resueltos dentro de la carpeta de respaldo.
+          if (old.startsWith(backupRoot + sep) && /^snapshot-\d+$/.test(old.slice(backupRoot.length + 1))) await rm(old, { recursive: true, force: true }).catch(() => {});
+        }
+      }
+      exporting = null; resolvePromise();
+    });
+    child.on('error', () => { exporting = null; resolvePromise(); });
   });
+  return exporting;
 }
 async function stop(code = 0) {
   if (stopping) return; stopping = true; clearInterval(exportTimer);
@@ -45,7 +66,8 @@ async function stop(code = 0) {
 }
 process.on('SIGINT', () => stop()); process.on('SIGTERM', () => stop());
 const args = ['node_modules/firebase-tools/lib/bin/firebase.js', 'emulators:start', '--only', 'firestore', '--project', env.FIREBASE_PROJECT_ID];
-if (existsSync('.emulator-data/firebase-export-metadata.json')) args.push('--import', '.emulator-data');
+const latestBackup = backups()[0] || (existsSync('.emulator-data/firebase-export-metadata.json') ? backupRoot : null);
+if (latestBackup) args.push('--import', latestBackup);
 emulator = spawn(process.execPath, args, { env, stdio: 'inherit', windowsHide: true });
 emulator.on('error', error => { console.error(error.message); stop(1); });
 emulator.on('exit', code => { if (!stopping) { console.error('El emulador se detuvo.'); stop(code || 1); } });
