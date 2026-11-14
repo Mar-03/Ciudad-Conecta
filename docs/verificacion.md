@@ -7,6 +7,7 @@
 - Diseño inspeccionado en escritorio de 1440 px y móvil de 390 px. Se corrigió el desbordamiento horizontal del panel; la tabla mantiene desplazamiento dentro de su contenedor.
 - Texto potencialmente peligroso se representa como texto, sin ejecutar HTML.
 - Error de red en el envío: conserva el formulario y no muestra confirmación.
+- Reinicio del emulador: respaldo importado y marca persistida recuperada correctamente; marca de prueba eliminada después de comprobarlo.
 - `npm audit --omit=dev`: cero vulnerabilidades reportadas en las dependencias de producción al verificar esta versión.
 
 Las capturas de las pruebas se generan en `test-results/`, excluida de Git. Los registros de prueba se eliminan después de verificar el flujo. No hay reportes precargados en la aplicación.
