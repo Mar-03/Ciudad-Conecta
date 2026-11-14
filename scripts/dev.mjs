@@ -60,6 +60,7 @@ function exportData() {
 async function stop(code = 0) {
   if (stopping) return; stopping = true; clearInterval(exportTimer);
   console.log('\nGuardando datos del emulador…');
+  if (exporting) await exporting;
   await exportData();
   server?.kill('SIGTERM'); emulator?.kill('SIGINT');
   setTimeout(() => process.exit(code), 1000);
